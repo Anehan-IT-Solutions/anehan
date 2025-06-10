@@ -27,7 +27,7 @@ const Footer: React.FC = () => {
               color: 'primary.dark'
             }}
           >
-            anehan
+            Anehan
           </Typography>{' '}
           &copy; {new Date().getFullYear()} &middot; All rights reserved.
         </Typography>

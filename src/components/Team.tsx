@@ -5,11 +5,9 @@ import {
   Typography,
   Paper,
   Avatar,
-  useTheme,
   alpha,
   Grid,
 } from '@mui/material';
-import theme from '../theme';
 
 interface Member {
   name: string;
@@ -45,32 +43,32 @@ const allMembers: Member[] = [
   },
   {
     name: 'Kimberly Lapuz',
-    role: 'Marketing Officer',
+    role: 'Sales Officer',
     image: 'members/kimberly.jpg',
     description: 'Executes marketing campaigns and manages digital content to engage our community and drive growth.'
   },
   {
     name: 'Kyla Mae Sorongan',
-    role: 'Sales Officer',
+    role: 'Marketing Officer',
     image: 'members/kyla.jpg',
     description: 'Builds and maintains strong partner relationships, driving sales and identifying new business opportunities.'
   },
   {
     name: 'Jobert Mampusti',
-    role: 'CTO & Blockchain Dev',
+    role: 'CTO & Blockchain Developer',
     image: 'members/jobert.jpg',
     description: 'Leads the technological vision and development of our innovative blockchain-based platform.'
   },
   {
     name: 'JM Cabrera',
-    role: 'CIO & Cyber Sec',
+    role: 'CIO & Cyber Security Officer',
     image: 'members/jm.jpg',
     description: 'Manages IT infrastructure and fortifies our platform against cyber threats to ensure data integrity and security.'
   },
   {
     name: 'Ivhan Salazar',
-    role: 'Fullstack Dev',
-    image: 'members/ivhan.jpg',
+    role: 'Full Stack Developer',
+    image: 'members/ivhanpic.jpg',
     description: 'Develops and maintains both client-side and server-side applications, ensuring a seamless user experience.'
   },
 ];
@@ -79,7 +77,7 @@ const findMember = (name: string): Member | undefined => allMembers.find(m => m.
 
 const ceo = findMember('Aldrin Abenoja');
 const managers = [findMember('John Angelo Basco'), findMember('Francisco Theodore'), findMember('Joerel Belen')];
-const marketingTeam = [findMember('Kimberly Lapuz'), findMember('Kyla Mae Sorongan')];
+const marketingTeam = [findMember('Kyla Mae Sorongan'), findMember('Kimberly Lapuz')];
 const techTeam = [findMember('Jobert Mampusti'), findMember('JM Cabrera'), findMember('Ivhan Salazar')];
 
 const teams: Record<string, (Member | undefined)[]> = {
@@ -98,8 +96,9 @@ const MemberCard = ({ member, isManager = false }: { member: Member, isManager?:
       alignItems: 'center',
       textAlign: 'center',
       height: '100%',
-      borderColor: (theme) => alpha(theme.palette.grey[500], 0.3),
-      backgroundColor: isManager ? alpha('#ffffff', 0.9) : alpha(theme.palette.grey[50], 0.9),
+      backgroundColor: '#ffffff',
+      borderColor: (theme) => theme.palette.grey[300],
+      borderTop: (theme) => `4px solid ${isManager ? theme.palette.primary.main : theme.palette.primary.light}`,
       transition: 'box-shadow 0.3s, transform 0.3s',
       '&:hover': {
         transform: 'translateY(-4px)',
@@ -115,7 +114,6 @@ const MemberCard = ({ member, isManager = false }: { member: Member, isManager?:
 );
 
 const Team: React.FC = () => {
-  const theme = useTheme();
   if (!ceo) return null;
 
   return (
@@ -124,10 +122,32 @@ const Team: React.FC = () => {
       id="team"
       sx={{
         py: 12,
-        background: (theme) => `linear-gradient(180deg, ${alpha(theme.palette.primary.light, 0.08)} 0%, #ffffff 25%)`,
+        backgroundColor: (theme) => theme.palette.grey[100],
+        position: 'relative',
+        overflow: 'hidden',
+        '&::before, &::after': {
+          content: '""',
+          position: 'absolute',
+          borderRadius: '50%',
+          background: (theme) => `radial-gradient(circle, ${alpha(theme.palette.primary.light, 0.1)} 0%, transparent 60%)`,
+          zIndex: 0,
+          pointerEvents: 'none',
+        },
+        '&::before': {
+          width: 300,
+          height: 300,
+          top: -50,
+          left: -100,
+        },
+        '&::after': {
+          width: 400,
+          height: 400,
+          bottom: -100,
+          right: -100,
+        }
       }}
     >
-      <Container maxWidth="xl">
+      <Container maxWidth="xl" sx={{ position: 'relative', zIndex: 1 }}>
         <Box sx={{ textAlign: 'center', mb: 8 }}>
           <Typography variant="h2" component="h2" sx={{ color: 'primary.dark', mb: 2, fontFamily: 'Agrandir', fontWeight: 800 }}>
             Our Team
@@ -139,7 +159,7 @@ const Team: React.FC = () => {
 
         <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
           {/* CEO */}
-          <Box sx={{ mb: 2, width: { xs: '80%', sm: '60%', md: '40%', lg: '30%' } }}>
+          <Box sx={{ mb: 2, width: { xs: '80%', sm: '50%', md: '35%', lg: '25%' } }}>
             <MemberCard member={ceo} isManager />
           </Box>
           
@@ -160,11 +180,11 @@ const Team: React.FC = () => {
             <Grid container spacing={4} justifyContent="center">
               {managers.map(manager => (
                 manager && (
-                  <Grid size={{xs: 12, md: 4}} key={manager.name}>
+                  <Grid size={{ xs: 12, md: 4 }} key={manager.name}>
                     <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                       {/* Connector from horizontal line */}
                       <Box sx={{ width: '2px', height: '20px', bgcolor: 'grey.300' }} />
-                      <Box sx={{ mb: 2, width: '90%' }}>
+                      <Box sx={{ mb: 2, width: '85%' }}>
                         <MemberCard member={manager} isManager />
                       </Box>
                       
@@ -172,7 +192,7 @@ const Team: React.FC = () => {
                       {(teams[manager.role] || []).length > 0 && (
                         <>
                           <Box sx={{ width: '2px', height: '20px', bgcolor: 'grey.300' }} />
-                          <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2, width: '90%' }}>
+                          <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2, width: '85%' }}>
                             {(teams[manager.role] || []).map(member => (
                               member && <MemberCard key={member.name} member={member} />
                             ))}

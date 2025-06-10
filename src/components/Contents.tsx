@@ -23,6 +23,7 @@ import GavelOutlined from '@mui/icons-material/GavelOutlined';
 import StoreOutlined from '@mui/icons-material/StoreOutlined';
 import FactoryOutlined from '@mui/icons-material/FactoryOutlined';
 import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
+import { useInView } from 'react-intersection-observer';
 
 interface SectionProps {
   id: string;
@@ -30,31 +31,42 @@ interface SectionProps {
   sx?: SxProps<Theme>;
 }
 
-const Section = ({ id, children, sx = {} }: SectionProps) => (
-  <Box
-    component="section"
-    id={id}
-    sx={{
-      py: { xs: 8, md: 10 },
-      ...sx,
-    }}
-  >
-    <Container maxWidth="lg">
-      <Paper
-        elevation={0}
-        variant="outlined"
-        sx={{
-          p: { xs: 3, sm: 4, md: 6 },
-          backgroundColor: '#ffffff',
-          borderColor: (theme) => alpha(theme.palette.grey[500], 0.2),
-          borderRadius: 3,
-        }}
-      >
-        {children}
-      </Paper>
-    </Container>
-  </Box>
-);
+const Section = ({ id, children, sx = {} }: SectionProps) => {
+  const { ref, inView } = useInView({
+    triggerOnce: true,
+    threshold: 0.1,
+  });
+
+  return (
+    <Box
+      ref={ref}
+      component="section"
+      id={id}
+      sx={{
+        py: { xs: 8, md: 10 },
+        transition: 'opacity 0.8s ease-out, transform 0.8s ease-out',
+        opacity: inView ? 1 : 0,
+        transform: inView ? 'translateY(0)' : 'translateY(40px)',
+        ...sx,
+      }}
+    >
+      <Container maxWidth="lg">
+        <Paper
+          elevation={0}
+          variant="outlined"
+          sx={{
+            p: { xs: 3, sm: 4, md: 6 },
+            backgroundColor: '#ffffff',
+            borderColor: (theme) => alpha(theme.palette.grey[500], 0.2),
+            borderRadius: 3,
+          }}
+        >
+          {children}
+        </Paper>
+      </Container>
+    </Box>
+  );
+};
 
 interface SectionTitleProps {
   children: React.ReactNode;
@@ -158,10 +170,19 @@ const Contents: React.FC = () => {
 
 
   return (
-    <Box sx={{ 
-      background: (theme) => `linear-gradient(180deg, ${alpha(theme.palette.primary.light, 0.08)} 0%, #ffffff 25%)`,
+    <Box id="contents" sx={{ 
+      backgroundColor: (_theme) => alpha('#a1c897', 0.25),
       position: 'relative', 
-      overflow: 'hidden' 
+      overflow: 'hidden',
+      '&::before, &::after': {
+        content: '""',
+        position: 'absolute',
+        borderRadius: '50%',
+        background: (_theme) => `radial-gradient(circle, ${alpha('#a1c897', 0.2)} 0%, transparent 70%)`,
+        zIndex: 0,
+        pointerEvents: 'none',
+        filter: 'blur(50px)',
+      },
     }}>
       <Box sx={{position: 'relative', zIndex: 1}}>
 
