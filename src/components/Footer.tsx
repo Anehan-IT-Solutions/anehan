@@ -8,7 +8,7 @@ const Footer: React.FC = () => {
     <Box
       component="footer"
       sx={{
-        backgroundColor: theme.palette.grey[100],
+        backgroundColor: '#a1c897',
         color: theme.palette.text.secondary,
         textAlign: 'center',
         py: 4,
@@ -27,7 +27,7 @@ const Footer: React.FC = () => {
               color: 'primary.dark'
             }}
           >
-            Anehan
+            anehan
           </Typography>{' '}
           &copy; {new Date().getFullYear()} &middot; All rights reserved.
         </Typography>

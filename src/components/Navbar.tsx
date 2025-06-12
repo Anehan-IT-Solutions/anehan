@@ -63,7 +63,7 @@ const Navbar: React.FC = () => {
                 fontFamily: 'Agrandir',
               }}
             >
-              Anehan
+              anehan
             </Typography>
           </Box>
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import Slider from 'react-slick';
-import { Box, Container, Typography, Paper, useTheme, alpha } from '@mui/material';
+import { Box, Container, Typography, Paper, useTheme } from '@mui/material';
 
 import "slick-carousel/slick/slick.css"; 
 import "slick-carousel/slick/slick-theme.css";
@@ -99,8 +99,29 @@ const Prototype: React.FC = () => {
       id="prototype" 
       sx={{ 
         py: 12,
-        backgroundColor: (_theme) => alpha('#a1c897', 0.25),
+        backgroundColor: (theme) => theme.palette.grey[100],
+        position: 'relative',
         overflow: 'hidden',
+        '&::before, &::after': {
+          content: '""',
+          position: 'absolute',
+          borderRadius: '50%',
+          background: (theme) => `radial-gradient(circle, ${theme.palette.primary.light}10 0%, transparent 60%)`,
+          zIndex: 0,
+          pointerEvents: 'none',
+        },
+        '&::before': {
+          width: 300,
+          height: 300,
+          top: -50,
+          left: -100,
+        },
+        '&::after': {
+          width: 400,
+          height: 400,
+          bottom: -100,
+          right: -100,
+        }
       }}
     >
       <Container maxWidth="xl">

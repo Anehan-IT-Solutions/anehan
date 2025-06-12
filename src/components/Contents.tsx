@@ -10,7 +10,6 @@ import {
   ListItemIcon,
   ListItemText,
   useTheme,
-  alpha,
 } from '@mui/material';
 import type { Theme, SxProps } from '@mui/material';
 import StorefrontOutlined from '@mui/icons-material/StorefrontOutlined';
@@ -52,12 +51,11 @@ const Section = ({ id, children, sx = {} }: SectionProps) => {
     >
       <Container maxWidth="lg">
         <Paper
-          elevation={0}
           variant="outlined"
           sx={{
             p: { xs: 3, sm: 4, md: 6 },
             backgroundColor: '#ffffff',
-            borderColor: (theme) => alpha(theme.palette.grey[500], 0.2),
+            borderColor: (theme) => theme.palette.grey[300],
             borderRadius: 3,
           }}
         >
@@ -106,14 +104,14 @@ const InfoCard = ({ icon, title, text }: InfoCardProps) => {
           height: '100%',
           borderRadius: 3,
           backgroundColor: 'white',
-          border: (theme) => `1px solid ${alpha(theme.palette.grey[500], 0.2)}`,
+          border: (theme) => `1px solid ${theme.palette.grey[300]}`,
           borderTop: '4px solid transparent',
           transition: 'all 0.3s ease-in-out',
           '&:hover': {
             transform: 'translateY(-6px)',
             borderColor: 'transparent',
             borderTopColor: theme.palette.primary.main,
-            boxShadow: `0 10px 25px ${alpha(theme.palette.primary.dark, 0.1)}`,
+            boxShadow: '0 8px 20px rgba(21, 128, 61, 0.08)',
           },
         }}
       >
@@ -124,7 +122,7 @@ const InfoCard = ({ icon, title, text }: InfoCardProps) => {
             alignItems: 'center',
             mb: 2,
             color: theme.palette.primary.main,
-            backgroundColor: alpha(theme.palette.primary.light, 0.2),
+            backgroundColor: '#dcfce7',
             borderRadius: '50%',
             p: 2,
           }}
@@ -171,18 +169,29 @@ const Contents: React.FC = () => {
 
   return (
     <Box id="contents" sx={{ 
-      backgroundColor: (_theme) => alpha('#a1c897', 0.25),
+      backgroundColor: (theme) => theme.palette.grey[100],
       position: 'relative', 
       overflow: 'hidden',
       '&::before, &::after': {
         content: '""',
         position: 'absolute',
         borderRadius: '50%',
-        background: (_theme) => `radial-gradient(circle, ${alpha('#a1c897', 0.2)} 0%, transparent 70%)`,
+        background: (theme) => `radial-gradient(circle, ${theme.palette.primary.light}10 0%, transparent 60%)`,
         zIndex: 0,
         pointerEvents: 'none',
-        filter: 'blur(50px)',
       },
+      '&::before': {
+        width: 300,
+        height: 300,
+        top: -50,
+        left: -100,
+      },
+      '&::after': {
+        width: 400,
+        height: 400,
+        bottom: -100,
+        right: -100,
+      }
     }}>
       <Box sx={{position: 'relative', zIndex: 1}}>
 
@@ -204,7 +213,7 @@ const Contents: React.FC = () => {
             </Typography>
           </Grid>
           <Grid size={{xs: 12, md: 5}}>
-            <Box sx={{ p: 3, backgroundColor: alpha(theme.palette.primary.light, 0.15), borderRadius: 3 }}>
+            <Box sx={{ p: 3, backgroundColor: '#e6f5ea', borderRadius: 3 }}>
               <Typography variant="h6" sx={{ fontWeight: 'bold', color: 'primary.dark', mb: 2, fontFamily: 'Agrandir, sans-serif' }}>Key Highlights</Typography>
               <List dense>
                 {keyHighlights.map(item => (
@@ -223,7 +232,7 @@ const Contents: React.FC = () => {
         <SectionTitle>Mission & Vision</SectionTitle>
         <Grid container spacing={4}>
           <Grid size={{xs: 12, md: 6}}>
-            <Box sx={{ p: 4, backgroundColor: alpha(theme.palette.primary.light, 0.15), borderRadius: 3, height: '100%' }}>
+            <Box sx={{ p: 4, backgroundColor: '#e6f5ea', borderRadius: 3, height: '100%' }}>
               <Typography variant="h5" sx={{ fontWeight: 'bold', color: 'primary.dark', mb: 2, fontFamily: 'Agrandir, sans-serif' }}>Our Mission</Typography>
               <Typography sx={{ color: 'text.secondary' }}>
                 To empower farmers with better market access and fair prices while ensuring quality rice reaches consumers through an efficient, transparent supply chain.
@@ -231,7 +240,7 @@ const Contents: React.FC = () => {
             </Box>
           </Grid>
           <Grid size={{xs: 12, md: 6}}>
-            <Box sx={{ p: 4, backgroundColor: alpha(theme.palette.primary.light, 0.15), borderRadius: 3, height: '100%' }}>
+            <Box sx={{ p: 4, backgroundColor: '#e6f5ea', borderRadius: 3, height: '100%' }}>
               <Typography variant="h5" sx={{ fontWeight: 'bold', color: 'primary.dark', mb: 2, fontFamily: 'Agrandir, sans-serif' }}>Our Vision</Typography>
               <Typography sx={{ color: 'text.secondary' }}>
                 To become the leading digital platform that transforms the rice industry in the Philippines, creating sustainable value for all stakeholders.

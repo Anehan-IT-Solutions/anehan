@@ -4,6 +4,7 @@ import Navbar from './components/Navbar'
 import Home from './components/Home'
 // import TechStack from './components/TechStack'
 import Team from './components/Team'
+import OurJourney from './components/OurJourney'
 import Contents from './components/Contents'
 import Prototype from './components/Prototype'
 import ContactInfo from './components/ContactInfo'
@@ -20,8 +21,11 @@ function App() {
       {/* <TechStack /> */}
       
       <Contents />
+      
       <Prototype />
+      <OurJourney />
       <Team />
+      
       <ContactInfo />
       <Footer />
       

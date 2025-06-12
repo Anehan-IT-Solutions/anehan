@@ -4,7 +4,6 @@ import {
   Container,
   Typography,
   Button,
-  alpha,
 } from '@mui/material';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import { Link } from 'react-scroll';
@@ -25,7 +24,7 @@ const Home: React.FC = () => {
         textAlign: 'center',
         pt: 8,
         pb: 8,
-        background: `linear-gradient(to bottom, ${alpha('#a1c897', 0.9)}, ${alpha('#4C6A53', 0.9)}), url('/anehan-bg.png')`,
+        background: 'linear-gradient(to bottom, rgba(161, 200, 151, 0.9), rgba(76, 106, 83, 0.9)), url(\'/anehan-bg.png\')',
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         '&::after': {
@@ -72,7 +71,7 @@ const Home: React.FC = () => {
             fontWeight: 400,
             mb: 4,
             fontFamily: 'Agrandir, sans-serif',
-            color: alpha('#ffffff', 0.9),
+            color: 'rgba(255, 255, 255, 0.9)',
             textShadow: '1px 1px 2px rgba(0,0,0,0.2)',
             animation: 'fadeInUp 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.2s both',
             '@keyframes fadeInUp': {
@@ -93,7 +92,7 @@ const Home: React.FC = () => {
             mt: 4,
             mb: 6,
             fontFamily: 'Agrandir, sans-serif',
-            color: alpha('#ffffff', 0.85),
+            color: 'rgba(255, 255, 255, 0.85)',
             fontSize: { xs: '1rem', md: '1.125rem' },
             lineHeight: 1.8,
             textShadow: '1px 1px 2px rgba(0,0,0,0.2)',
@@ -120,23 +119,21 @@ const Home: React.FC = () => {
             smooth={true}
             offset={0}
             duration={500}
-            variant="outlined"
+            variant="contained"
             size="large"
             sx={{
               px: 5,
               py: 1.5,
-              borderWidth: '2px !important',
               borderRadius: '8px',
               fontWeight: 'bold',
+              backgroundColor: '#f3a203',
               color: 'white',
-              borderColor: alpha('#ffffff', 0.8),
               transition: 'all 0.3s ease',
               cursor: 'pointer',
               '&:hover': {
-                backgroundColor: alpha('#ffffff', 0.1),
-                borderColor: '#ffffff',
-                color: 'white',
+                backgroundColor: '#ff9e00',
                 transform: 'scale(1.05)',
+                boxShadow: '0 6px 15px rgba(243, 162, 3, 0.4)',
               },
             }}
           >
@@ -157,7 +154,7 @@ const Home: React.FC = () => {
           bottom: '2rem',
           left: '50%',
           zIndex: 2,
-          color: alpha('#FFFFFF', 0.7),
+          color: 'rgba(255, 255, 255, 0.7)',
           cursor: 'pointer',
           animation: 'float 2.5s infinite ease-in-out',
           '@keyframes float': {

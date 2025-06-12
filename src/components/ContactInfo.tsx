@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import emailjs from '@emailjs/browser';
-import { Box, Button, Container, TextField, Typography, CircularProgress, Alert, Paper, alpha, Grid } from '@mui/material';
+import { Box, Button, Container, TextField, Typography, CircularProgress, Alert, Paper, Grid } from '@mui/material';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import ErrorIcon from '@mui/icons-material/Error';
 import SendIcon from '@mui/icons-material/Send';
@@ -78,17 +78,40 @@ const ContactInfo: React.FC = () => {
       id="contact-info" 
       sx={{ 
         py: 12,
-        background: (_theme) => `radial-gradient(ellipse at center, ${alpha('#ffffff', 0.5)} 0%, ${alpha('#a1c897', 0.35)} 80%)`,
+        backgroundColor: (theme) => theme.palette.grey[100],
         position: 'relative',
         overflow: 'hidden',
+        '&::before, &::after': {
+          content: '""',
+          position: 'absolute',
+          borderRadius: '50%',
+          background: (theme) => `radial-gradient(circle, ${theme.palette.primary.light}10 0%, transparent 60%)`,
+          zIndex: 0,
+          pointerEvents: 'none',
+        },
+        '&::before': {
+          width: 300,
+          height: 300,
+          top: -50,
+          left: -100,
+        },
+        '&::after': {
+          width: 400,
+          height: 400,
+          bottom: -100,
+          right: -100,
+        }
       }}
     >
       <Container maxWidth="md">
-        <Paper sx={{ 
-          p: { xs: 3, md: 5 },
-          boxShadow: (theme) => `0 16px 40px ${alpha(theme.palette.grey[400], 0.1)}`,
-          borderRadius: 4,
-        }}>
+        <Paper 
+          variant="outlined"
+          sx={{ 
+            p: { xs: 3, md: 5 },
+            borderColor: (theme) => theme.palette.grey[300],
+            borderRadius: 4,
+            backgroundColor: '#ffffff',
+          }}>
           <Typography 
             variant="h3" 
             fontWeight={800} 
@@ -186,9 +209,9 @@ const ContactInfo: React.FC = () => {
                 sx={{ 
                   py: 1.5,
                   fontSize: '1.1rem',
-                  boxShadow: (theme) => `0 4px 20px ${alpha(theme.palette.primary.main, 0.25)}`,
+                  boxShadow: '0 4px 12px rgba(21, 128, 61, 0.2)',
                   '&:hover': {
-                    boxShadow: (theme) => `0 6px 24px ${alpha(theme.palette.primary.main, 0.35)}`,
+                    boxShadow: '0 6px 18px rgba(21, 128, 61, 0.25)',
                   }
                 }}
                 disabled={status === 'loading'}
