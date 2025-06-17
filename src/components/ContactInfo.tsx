@@ -182,6 +182,10 @@ const ContactInfo: React.FC = () => {
                     color: '#00c261',
                     textDecoration: 'none',
                     fontWeight: 600,
+                    wordBreak: 'break-all',
+                    fontSize: { xs: '0.9rem', sm: '1rem' },
+                    lineHeight: 1.4,
+                    display: 'block',
                     '&:hover': {
                       textDecoration: 'underline',
                     },

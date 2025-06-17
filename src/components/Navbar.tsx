@@ -124,13 +124,18 @@ const Navbar: React.FC = () => {
                 {menuItems.map((item) => (
                   <MenuItem
                     key={item.label}
-                    onClick={handleMenuClose}
-                    component={Link}
-                    to={item.to}
-                    spy={true}
-                    smooth={true}
-                    offset={-70}
-                    duration={500}
+                    onClick={() => {
+                      handleMenuClose();
+                      // Use setTimeout to ensure menu closes before scrolling
+                      setTimeout(() => {
+                        const element = document.getElementById(item.to);
+                        if (element) {
+                          const yOffset = -70;
+                          const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset;
+                          window.scrollTo({ top: y, behavior: 'smooth' });
+                        }
+                      }, 100);
+                    }}
                     sx={{
                       cursor: 'pointer',
                       '&:hover': {

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Box,
   Container,
@@ -127,8 +127,34 @@ const events: Event[] = [
 const Showcase: React.FC = () => {
   const [selectedEvent, setSelectedEvent] = useState<Event | null>(null);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [bottomSheetHeight, setBottomSheetHeight] = useState(30); // percentage
+  const [isDragging, setIsDragging] = useState(false);
+  const [startY, setStartY] = useState(0);
+  const [startHeight, setStartHeight] = useState(30);
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
+
+  // Add global event listeners for drag functionality
+  useEffect(() => {
+    const handleGlobalMouseMove = (e: MouseEvent) => handleGlobalDragMove(e);
+    const handleGlobalMouseUp = () => handleDragEnd();
+    const handleGlobalTouchMove = (e: TouchEvent) => handleGlobalDragMove(e);
+    const handleGlobalTouchEnd = () => handleDragEnd();
+
+    if (isDragging) {
+      document.addEventListener('mousemove', handleGlobalMouseMove);
+      document.addEventListener('mouseup', handleGlobalMouseUp);
+      document.addEventListener('touchmove', handleGlobalTouchMove, { passive: false });
+      document.addEventListener('touchend', handleGlobalTouchEnd);
+    }
+
+    return () => {
+      document.removeEventListener('mousemove', handleGlobalMouseMove);
+      document.removeEventListener('mouseup', handleGlobalMouseUp);
+      document.removeEventListener('touchmove', handleGlobalTouchMove);
+      document.removeEventListener('touchend', handleGlobalTouchEnd);
+    };
+  }, [isDragging, startY, startHeight, bottomSheetHeight]);
 
   const handleEventClick = (event: Event) => {
     setSelectedEvent(event);
@@ -138,6 +164,7 @@ const Showcase: React.FC = () => {
   const handleClose = () => {
     setSelectedEvent(null);
     setCurrentImageIndex(0);
+    setBottomSheetHeight(30);
   };
 
   const handleNextImage = () => {
@@ -153,6 +180,41 @@ const Showcase: React.FC = () => {
       setCurrentImageIndex((prev) => 
         prev === 0 ? selectedEvent.images.length - 1 : prev - 1
       );
+    }
+  };
+
+  const handleDragStart = (e: React.TouchEvent | React.MouseEvent) => {
+    setIsDragging(true);
+    setStartHeight(bottomSheetHeight);
+    const clientY = 'touches' in e ? e.touches[0].clientY : e.clientY;
+    setStartY(clientY);
+  };
+
+
+  const handleGlobalDragMove = (e: MouseEvent | TouchEvent) => {
+    if (!isDragging) return;
+    
+    const clientY = 'touches' in e ? e.touches[0].clientY : e.clientY;
+    const deltaY = startY - clientY;
+    const windowHeight = window.innerHeight;
+    const deltaPercent = (deltaY / windowHeight) * 100;
+    
+    let newHeight = startHeight + deltaPercent;
+    newHeight = Math.max(15, Math.min(75, newHeight)); // Constrain between 15% and 75%
+    
+    setBottomSheetHeight(newHeight);
+  };
+
+  const handleDragEnd = () => {
+    setIsDragging(false);
+    
+    // Snap to nearest position
+    if (bottomSheetHeight < 25) {
+      setBottomSheetHeight(15); // Minimized
+    } else if (bottomSheetHeight < 50) {
+      setBottomSheetHeight(30); // Default
+    } else {
+      setBottomSheetHeight(70); // Expanded
     }
   };
 
@@ -370,134 +432,398 @@ const Showcase: React.FC = () => {
         </Box>
       </Container>
 
-      {/* Image Gallery Dialog */}
-      <Dialog
-        open={!!selectedEvent}
-        onClose={handleClose}
-        maxWidth="md"
-        fullWidth
-        fullScreen={fullScreen}
-        PaperProps={{
-          sx: {
-            bgcolor: 'transparent',
-            boxShadow: 'none',
-            overflow: 'hidden',
-          },
-        }}
-      >
-        <DialogContent
-          sx={{
-            p: 0,
-            position: 'relative',
-            bgcolor: 'rgba(0,0,0,0.9)',
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            justifyContent: 'center',
-            minHeight: fullScreen ? '100vh' : '80vh',
+      {/* Image Gallery Dialog - Desktop */}
+      {!fullScreen && (
+        <Dialog
+          open={!!selectedEvent}
+          onClose={handleClose}
+          maxWidth="lg"
+          fullWidth
+          PaperProps={{
+            sx: {
+              bgcolor: 'transparent',
+              boxShadow: 'none',
+              overflow: 'hidden',
+            },
           }}
         >
-          {selectedEvent && (
-            <>
-              <IconButton
-                onClick={handleClose}
-                sx={{
-                  position: 'absolute',
-                  top: 16,
-                  right: 16,
-                  color: 'white',
-                  bgcolor: 'rgba(0,0,0,0.5)',
-                  '&:hover': {
-                    bgcolor: 'rgba(0,0,0,0.7)',
-                  },
-                  zIndex: 2,
-                }}
-              >
-                <CloseIcon />
-              </IconButton>
-
-              <Box
-                component="img"
-                src={selectedEvent.images[currentImageIndex]}
-                alt={`${selectedEvent.title} - Image ${currentImageIndex + 1}`}
-                sx={{
-                  maxWidth: '100%',
-                  maxHeight: '70vh',
-                  objectFit: 'contain',
-                  borderRadius: 1,
-                }}
-              />
-
-              {selectedEvent.images.length > 1 && (
-                <>
-                  <IconButton
-                    onClick={handlePrevImage}
-                    sx={{
-                      position: 'absolute',
-                      left: 16,
-                      top: '50%',
-                      transform: 'translateY(-50%)',
-                      color: 'white',
-                      bgcolor: 'rgba(0,0,0,0.5)',
-                      '&:hover': {
-                        bgcolor: 'rgba(0,0,0,0.7)',
-                      },
-                    }}
-                  >
-                    <NavigateBeforeIcon />
-                  </IconButton>
-
-                  <IconButton
-                    onClick={handleNextImage}
-                    sx={{
-                      position: 'absolute',
-                      right: 16,
-                      top: '50%',
-                      transform: 'translateY(-50%)',
-                      color: 'white',
-                      bgcolor: 'rgba(0,0,0,0.5)',
-                      '&:hover': {
-                        bgcolor: 'rgba(0,0,0,0.7)',
-                      },
-                    }}
-                  >
-                    <NavigateNextIcon />
-                  </IconButton>
-                </>
-              )}
-
-              <Box
-                sx={{
-                  position: 'absolute',
-                  bottom: 0,
-                  left: 0,
-                  right: 0,
-                  bgcolor: 'rgba(0,0,0,0.8)',
-                  color: 'white',
-                  p: 3,
-                }}
-              >
-                <Typography
-                  variant="h6"
+          <DialogContent
+            sx={{
+              p: 0,
+              position: 'relative',
+              bgcolor: 'rgba(0,0,0,0.9)',
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              justifyContent: 'center',
+              minHeight: '80vh',
+            }}
+          >
+            {selectedEvent && (
+              <>
+                <IconButton
+                  onClick={handleClose}
                   sx={{
-                    fontWeight: 'bold',
-                    mb: 1,
-                    fontFamily: 'Agrandir, sans-serif',
+                    position: 'absolute',
+                    top: 16,
+                    right: 16,
+                    color: 'white',
+                    bgcolor: 'rgba(0,0,0,0.5)',
+                    '&:hover': {
+                      bgcolor: 'rgba(0,0,0,0.7)',
+                    },
+                    zIndex: 2,
                   }}
                 >
-                  {selectedEvent.title}
-                </Typography>
-                <Typography variant="body2" sx={{ mb: 1 }}>
-                  {selectedEvent.description}
-                </Typography>
-                <Typography variant="caption" sx={{ color: '#bdc3c7' }}>
-                  {selectedEvent.date} • {selectedEvent.location} • Image {currentImageIndex + 1} of {selectedEvent.images.length}
-                </Typography>
-              </Box>
-            </>
-          )}
-        </DialogContent>
-      </Dialog>
+                  <CloseIcon />
+                </IconButton>
+
+                <Box
+                  component="img"
+                  src={selectedEvent.images[currentImageIndex]}
+                  alt={`${selectedEvent.title} - Image ${currentImageIndex + 1}`}
+                  sx={{
+                    maxWidth: '100%',
+                    maxHeight: '60vh',
+                    objectFit: 'contain',
+                    borderRadius: 1,
+                  }}
+                />
+
+                {selectedEvent.images.length > 1 && (
+                  <>
+                    <IconButton
+                      onClick={handlePrevImage}
+                      sx={{
+                        position: 'absolute',
+                        left: 16,
+                        top: '40%',
+                        transform: 'translateY(-50%)',
+                        color: 'white',
+                        bgcolor: 'rgba(0,0,0,0.7)',
+                        width: 56,
+                        height: 56,
+                        zIndex: 3,
+                        '&:hover': {
+                          bgcolor: 'rgba(0,0,0,0.8)',
+                        },
+                      }}
+                    >
+                      <NavigateBeforeIcon sx={{ fontSize: 32 }} />
+                    </IconButton>
+
+                    <IconButton
+                      onClick={handleNextImage}
+                      sx={{
+                        position: 'absolute',
+                        right: 16,
+                        top: '40%',
+                        transform: 'translateY(-50%)',
+                        color: 'white',
+                        bgcolor: 'rgba(0,0,0,0.7)',
+                        width: 56,
+                        height: 56,
+                        zIndex: 3,
+                        '&:hover': {
+                          bgcolor: 'rgba(0,0,0,0.8)',
+                        },
+                      }}
+                    >
+                      <NavigateNextIcon sx={{ fontSize: 32 }} />
+                    </IconButton>
+                  </>
+                )}
+
+                <Box
+                  sx={{
+                    position: 'absolute',
+                    bottom: 0,
+                    left: 0,
+                    right: 0,
+                    bgcolor: 'rgba(0,0,0,0.85)',
+                    color: 'white',
+                    p: 3,
+                    backdropFilter: 'blur(4px)',
+                  }}
+                >
+                  <Typography
+                    variant="h6"
+                    sx={{
+                      fontWeight: 'bold',
+                      mb: 1,
+                      fontFamily: 'Agrandir, sans-serif',
+                      fontSize: '1.25rem',
+                      lineHeight: 1.3,
+                    }}
+                  >
+                    {selectedEvent.title}
+                  </Typography>
+                  <Typography 
+                    variant="body2" 
+                    sx={{ 
+                      mb: 1,
+                      fontSize: '0.875rem',
+                      lineHeight: 1.5,
+                    }}
+                  >
+                    {selectedEvent.description}
+                  </Typography>
+                  <Typography 
+                    variant="caption" 
+                    sx={{ 
+                      color: '#bdc3c7',
+                      fontSize: '0.75rem',
+                      display: 'block',
+                      lineHeight: 1.4,
+                    }}
+                  >
+                    {selectedEvent.date} • {selectedEvent.location} • Image {currentImageIndex + 1} of {selectedEvent.images.length}
+                  </Typography>
+                </Box>
+              </>
+            )}
+          </DialogContent>
+        </Dialog>
+      )}
+
+      {/* Image Gallery Dialog - Mobile */}
+      {fullScreen && (
+        <Dialog
+          open={!!selectedEvent}
+          onClose={handleClose}
+          fullScreen
+          PaperProps={{
+            sx: {
+              bgcolor: 'rgba(0,0,0,0.95)',
+              display: 'flex',
+              flexDirection: 'column',
+            },
+          }}
+        >
+          <DialogContent
+            sx={{
+              p: 0,
+              position: 'relative',
+              flex: 1,
+              display: 'flex',
+              flexDirection: 'column',
+              overflow: 'hidden',
+            }}
+          >
+            {selectedEvent && (
+              <>
+                {/* Header with close button */}
+                <Box
+                  sx={{
+                    position: 'absolute',
+                    top: 0,
+                    left: 0,
+                    right: 0,
+                    zIndex: 10,
+                    p: 2,
+                    background: 'linear-gradient(to bottom, rgba(0,0,0,0.8) 0%, transparent 100%)',
+                  }}
+                >
+                  <IconButton
+                    onClick={handleClose}
+                    sx={{
+                      position: 'absolute',
+                      top: 8,
+                      right: 8,
+                      color: 'white',
+                      bgcolor: 'rgba(0,0,0,0.6)',
+                      '&:hover': {
+                        bgcolor: 'rgba(0,0,0,0.8)',
+                      },
+                    }}
+                  >
+                    <CloseIcon />
+                  </IconButton>
+                </Box>
+
+                {/* Image container */}
+                <Box
+                  sx={{
+                    flex: 1,
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    position: 'relative',
+                    minHeight: '50vh',
+                  }}
+                >
+                  <Box
+                    component="img"
+                    src={selectedEvent.images[currentImageIndex]}
+                    alt={`${selectedEvent.title} - Image ${currentImageIndex + 1}`}
+                    sx={{
+                      maxWidth: '100%',
+                      maxHeight: '100%',
+                      objectFit: 'contain',
+                    }}
+                  />
+
+                  {selectedEvent.images.length > 1 && (
+                    <>
+                      <IconButton
+                        onClick={handlePrevImage}
+                        sx={{
+                          position: 'absolute',
+                          left: 8,
+                          top: '50%',
+                          transform: 'translateY(-50%)',
+                          color: 'white',
+                          bgcolor: 'rgba(0,0,0,0.7)',
+                          width: 48,
+                          height: 48,
+                          '&:hover': {
+                            bgcolor: 'rgba(0,0,0,0.8)',
+                          },
+                          '&:active': {
+                            bgcolor: 'rgba(0,0,0,0.9)',
+                            transform: 'translateY(-50%) scale(0.95)',
+                          },
+                        }}
+                      >
+                        <NavigateBeforeIcon sx={{ fontSize: 28 }} />
+                      </IconButton>
+
+                      <IconButton
+                        onClick={handleNextImage}
+                        sx={{
+                          position: 'absolute',
+                          right: 8,
+                          top: '50%',
+                          transform: 'translateY(-50%)',
+                          color: 'white',
+                          bgcolor: 'rgba(0,0,0,0.7)',
+                          width: 48,
+                          height: 48,
+                          '&:hover': {
+                            bgcolor: 'rgba(0,0,0,0.8)',
+                          },
+                          '&:active': {
+                            bgcolor: 'rgba(0,0,0,0.9)',
+                            transform: 'translateY(-50%) scale(0.95)',
+                          },
+                        }}
+                      >
+                        <NavigateNextIcon sx={{ fontSize: 28 }} />
+                      </IconButton>
+                    </>
+                  )}
+                </Box>
+
+                                 {/* Draggable bottom sheet */}
+                 <Box
+                   sx={{
+                     position: 'absolute',
+                     bottom: 0,
+                     left: 0,
+                     right: 0,
+                     bgcolor: 'rgba(0,0,0,0.9)',
+                     color: 'white',
+                     borderTopLeftRadius: 16,
+                     borderTopRightRadius: 16,
+                     backdropFilter: 'blur(8px)',
+                     height: `${bottomSheetHeight}vh`,
+                     overflow: 'hidden',
+                     display: 'flex',
+                     flexDirection: 'column',
+                     transition: isDragging ? 'none' : 'height 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                   }}
+                 >
+                   {/* Drag handle */}
+                   <Box
+                     sx={{
+                       width: 40,
+                       height: 4,
+                       bgcolor: 'rgba(255,255,255,0.3)',
+                       borderRadius: 2,
+                       mx: 'auto',
+                       mt: 1,
+                       mb: 2,
+                       cursor: 'grab',
+                       '&:active': {
+                         cursor: 'grabbing',
+                       },
+                     }}
+                     onMouseDown={handleDragStart}
+                     onTouchStart={handleDragStart}
+                   />
+                  
+                  {/* Content */}
+                  <Box
+                    sx={{
+                      px: 3,
+                      pb: 3,
+                      overflow: 'auto',
+                      flex: 1,
+                    }}
+                  >
+                    <Typography
+                      variant="h6"
+                      sx={{
+                        fontWeight: 'bold',
+                        mb: 2,
+                        fontFamily: 'Agrandir, sans-serif',
+                        fontSize: '1.1rem',
+                        lineHeight: 1.3,
+                      }}
+                    >
+                      {selectedEvent.title}
+                    </Typography>
+                    
+                    <Typography 
+                      variant="body2" 
+                      sx={{ 
+                        mb: 3,
+                        fontSize: '0.9rem',
+                        lineHeight: 1.6,
+                        color: 'rgba(255,255,255,0.9)',
+                      }}
+                    >
+                      {selectedEvent.description}
+                    </Typography>
+                    
+                    <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
+                      <Typography 
+                        variant="caption" 
+                        sx={{ 
+                          color: '#f3a203',
+                          fontSize: '0.8rem',
+                          fontWeight: 600,
+                        }}
+                      >
+                        📅 {selectedEvent.date}
+                      </Typography>
+                      <Typography 
+                        variant="caption" 
+                        sx={{ 
+                          color: '#00c261',
+                          fontSize: '0.8rem',
+                          fontWeight: 600,
+                        }}
+                      >
+                        📍 {selectedEvent.location}
+                      </Typography>
+                      <Typography 
+                        variant="caption" 
+                        sx={{ 
+                          color: '#bdc3c7',
+                          fontSize: '0.8rem',
+                        }}
+                      >
+                        📸 Image {currentImageIndex + 1} of {selectedEvent.images.length}
+                      </Typography>
+                    </Box>
+                  </Box>
+                </Box>
+              </>
+            )}
+          </DialogContent>
+        </Dialog>
+      )}
     </Box>
   );
 };
