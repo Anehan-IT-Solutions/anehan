@@ -9,7 +9,6 @@ import {
   ListItem,
   ListItemIcon,
   ListItemText,
-  useTheme,
 } from '@mui/material';
 import type { Theme, SxProps } from '@mui/material';
 import StorefrontOutlined from '@mui/icons-material/StorefrontOutlined';
@@ -50,13 +49,24 @@ const Section = ({ id, children, sx = {} }: SectionProps) => {
       }}
     >
       <Container maxWidth="lg">
-        <Paper
-          variant="outlined"
+        <        Paper
+          elevation={0}
           sx={{
             p: { xs: 3, sm: 4, md: 6 },
             backgroundColor: '#ffffff',
-            borderColor: (theme) => theme.palette.grey[300],
-            borderRadius: 3,
+            borderRadius: 4,
+            boxShadow: '0 4px 20px rgba(0,0,0,0.08)',
+            position: 'relative',
+            overflow: 'hidden',
+            '&::before': {
+              content: '""',
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              right: 0,
+              height: '6px',
+              background: 'linear-gradient(135deg, #f3a203 0%, #00c261 100%)',
+            }
           }}
         >
           {children}
@@ -77,10 +87,22 @@ const SectionTitle = ({ children }: SectionTitleProps) => (
     sx={{
       fontWeight: 800,
       mb: 6,
-      color: 'primary.dark',
+      color: '#f3a203',
       fontFamily: 'Agrandir, sans-serif',
       textAlign: 'center',
       fontSize: { xs: '2.5rem', md: '3rem' },
+      position: 'relative',
+      '&::after': {
+        content: '""',
+        position: 'absolute',
+        bottom: -8,
+        left: '50%',
+        transform: 'translateX(-50%)',
+        width: 80,
+        height: 4,
+        background: 'linear-gradient(135deg, #f3a203 0%, #00c261 100%)',
+        borderRadius: 2,
+      }
     }}
   >
     {children}
@@ -94,7 +116,6 @@ interface InfoCardProps {
 }
 
 const InfoCard = ({ icon, title, text }: InfoCardProps) => {
-  const theme = useTheme();
   return (
     <Grid size={{xs: 12, md: 4}}>
       <Box
@@ -102,17 +123,25 @@ const InfoCard = ({ icon, title, text }: InfoCardProps) => {
           p: 4,
           textAlign: 'center',
           height: '100%',
-          borderRadius: 3,
+          borderRadius: 4,
           backgroundColor: 'white',
-          border: (theme) => `1px solid ${theme.palette.grey[300]}`,
-          borderTop: '4px solid transparent',
-          transition: 'all 0.3s ease-in-out',
+          position: 'relative',
+          overflow: 'hidden',
+          boxShadow: '0 4px 20px rgba(0,0,0,0.08)',
+          transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
           '&:hover': {
-            transform: 'translateY(-6px)',
-            borderColor: 'transparent',
-            borderTopColor: theme.palette.primary.main,
-            boxShadow: '0 8px 20px rgba(21, 128, 61, 0.08)',
+            transform: 'translateY(-8px)',
+            boxShadow: '0 16px 40px rgba(243, 162, 3, 0.15), 0 8px 24px rgba(0, 194, 97, 0.1)',
           },
+          '&::before': {
+            content: '""',
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            right: 0,
+            height: '4px',
+            background: 'linear-gradient(135deg, #f3a203 0%, #00c261 100%)',
+          }
         }}
       >
         <Box
@@ -120,19 +149,29 @@ const InfoCard = ({ icon, title, text }: InfoCardProps) => {
             display: 'inline-flex',
             justifyContent: 'center',
             alignItems: 'center',
-            mb: 2,
-            color: theme.palette.primary.main,
-            backgroundColor: '#dcfce7',
+            mb: 3,
+            width: 80,
+            height: 80,
+            color: '#f3a203',
+            background: 'linear-gradient(135deg, #fef3e2 0%, #f0fdf4 100%)',
             borderRadius: '50%',
-            p: 2,
+            position: 'relative',
+            '&::after': {
+              content: '""',
+              position: 'absolute',
+              inset: -4,
+              borderRadius: '50%',
+              background: 'linear-gradient(135deg, rgba(243, 162, 3, 0.2) 0%, rgba(0, 194, 97, 0.2) 100%)',
+              zIndex: -1,
+            }
           }}
         >
           {icon}
         </Box>
-        <Typography variant="h6" sx={{ fontWeight: 'bold', color: 'primary.dark', mb: 1, fontFamily: 'Agrandir, sans-serif' }}>
+        <Typography variant="h6" sx={{ fontWeight: 'bold', color: '#f3a203', mb: 2, fontFamily: 'Agrandir, sans-serif' }}>
           {title}
         </Typography>
-        <Typography variant="body2" sx={{ color: 'text.secondary' }}>
+        <Typography variant="body2" sx={{ color: 'text.secondary', lineHeight: 1.6 }}>
           {text}
         </Typography>
       </Box>
@@ -142,7 +181,6 @@ const InfoCard = ({ icon, title, text }: InfoCardProps) => {
 
 
 const Contents: React.FC = () => {
-  const theme = useTheme();
 
   const keyHighlights = [
     '2000+ farmers in Central Luzon',
@@ -176,21 +214,22 @@ const Contents: React.FC = () => {
         content: '""',
         position: 'absolute',
         borderRadius: '50%',
-        background: (theme) => `radial-gradient(circle, ${theme.palette.primary.light}10 0%, transparent 60%)`,
+        background: 'radial-gradient(circle, rgba(243, 162, 3, 0.1) 0%, transparent 60%)',
         zIndex: 0,
         pointerEvents: 'none',
       },
       '&::before': {
-        width: 300,
-        height: 300,
-        top: -50,
+        width: 400,
+        height: 400,
+        top: -100,
         left: -100,
       },
       '&::after': {
-        width: 400,
-        height: 400,
-        bottom: -100,
-        right: -100,
+        width: 300,
+        height: 300,
+        bottom: -50,
+        right: -50,
+        background: 'radial-gradient(circle, rgba(0, 194, 97, 0.1) 0%, transparent 60%)',
       }
     }}>
       <Box sx={{position: 'relative', zIndex: 1}}>
@@ -213,12 +252,31 @@ const Contents: React.FC = () => {
             </Typography>
           </Grid>
           <Grid size={{xs: 12, md: 5}}>
-            <Box sx={{ p: 3, backgroundColor: '#e6f5ea', borderRadius: 3 }}>
-              <Typography variant="h6" sx={{ fontWeight: 'bold', color: 'primary.dark', mb: 2, fontFamily: 'Agrandir, sans-serif' }}>Key Highlights</Typography>
+            <Box sx={{ 
+              p: 3, 
+              background: 'linear-gradient(135deg, #fef3e2 0%, #f0fdf4 100%)', 
+              borderRadius: 4, 
+              border: '2px solid transparent',
+              backgroundClip: 'padding-box',
+              position: 'relative',
+              '&::before': {
+                content: '""',
+                position: 'absolute',
+                inset: 0,
+                padding: '2px',
+                background: 'linear-gradient(135deg, #f3a203 0%, #00c261 100%)',
+                borderRadius: 'inherit',
+                mask: 'linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)',
+                maskComposite: 'subtract',
+                WebkitMask: 'linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)',
+                WebkitMaskComposite: 'xor',
+              }
+            }}>
+              <Typography variant="h6" sx={{ fontWeight: 'bold', color: '#f3a203', mb: 2, fontFamily: 'Agrandir, sans-serif' }}>Key Highlights</Typography>
               <List dense>
                 {keyHighlights.map(item => (
                   <ListItem key={item} disableGutters>
-                    <ListItemIcon sx={{ minWidth: 32 }}><FiberManualRecordIcon sx={{ fontSize: 10, color: theme.palette.primary.main }} /></ListItemIcon>
+                    <ListItemIcon sx={{ minWidth: 32 }}><FiberManualRecordIcon sx={{ fontSize: 10, color: '#f3a203' }} /></ListItemIcon>
                     <ListItemText primary={item} sx={{ color: 'text.secondary' }}/>
                   </ListItem>
                 ))}
@@ -232,16 +290,48 @@ const Contents: React.FC = () => {
         <SectionTitle>Mission & Vision</SectionTitle>
         <Grid container spacing={4}>
           <Grid size={{xs: 12, md: 6}}>
-            <Box sx={{ p: 4, backgroundColor: '#e6f5ea', borderRadius: 3, height: '100%' }}>
-              <Typography variant="h5" sx={{ fontWeight: 'bold', color: 'primary.dark', mb: 2, fontFamily: 'Agrandir, sans-serif' }}>Our Mission</Typography>
+            <Box sx={{ 
+              p: 4, 
+              background: 'linear-gradient(135deg, #fef3e2 0%, #f0fdf4 100%)', 
+              borderRadius: 4, 
+              height: '100%', 
+              position: 'relative',
+              overflow: 'hidden',
+              '&::before': {
+                content: '""',
+                position: 'absolute',
+                top: 0,
+                left: 0,
+                right: 0,
+                height: '4px',
+                background: 'linear-gradient(135deg, #f3a203 0%, #00c261 100%)',
+              }
+            }}>
+              <Typography variant="h5" sx={{ fontWeight: 'bold', color: '#f3a203', mb: 2, fontFamily: 'Agrandir, sans-serif' }}>Our Mission</Typography>
               <Typography sx={{ color: 'text.secondary' }}>
                 To empower farmers with better market access and fair prices while ensuring quality rice reaches consumers through an efficient, transparent supply chain.
               </Typography>
             </Box>
           </Grid>
           <Grid size={{xs: 12, md: 6}}>
-            <Box sx={{ p: 4, backgroundColor: '#e6f5ea', borderRadius: 3, height: '100%' }}>
-              <Typography variant="h5" sx={{ fontWeight: 'bold', color: 'primary.dark', mb: 2, fontFamily: 'Agrandir, sans-serif' }}>Our Vision</Typography>
+            <Box sx={{ 
+              p: 4, 
+              background: 'linear-gradient(135deg, #fef3e2 0%, #f0fdf4 100%)', 
+              borderRadius: 4, 
+              height: '100%', 
+              position: 'relative',
+              overflow: 'hidden',
+              '&::before': {
+                content: '""',
+                position: 'absolute',
+                top: 0,
+                left: 0,
+                right: 0,
+                height: '4px',
+                background: 'linear-gradient(135deg, #f3a203 0%, #00c261 100%)',
+              }
+            }}>
+              <Typography variant="h5" sx={{ fontWeight: 'bold', color: '#f3a203', mb: 2, fontFamily: 'Agrandir, sans-serif' }}>Our Vision</Typography>
               <Typography sx={{ color: 'text.secondary' }}>
                 To become the leading digital platform that transforms the rice industry in the Philippines, creating sustainable value for all stakeholders.
               </Typography>
@@ -253,7 +343,7 @@ const Contents: React.FC = () => {
       <Section id="products-services">
         <SectionTitle>Products & Services</SectionTitle>
         <Grid container spacing={4}>
-          <InfoCard icon={<StorefrontOutlined sx={{ fontSize: 32 }} />} title="Digital Marketplace" text="Connect farmers directly with millers and retailers through our secure platform." />
+          <InfoCard icon={<StorefrontOutlined sx={{ fontSize: 32, }} />} title="Digital Marketplace" text="Connect farmers directly with millers and retailers through our secure platform." />
           <InfoCard icon={<AnalyticsOutlined sx={{ fontSize: 32 }} />} title="Market Analytics" text="Access real-time market data and price trends to make informed decisions." />
           <InfoCard icon={<AccountBalanceWalletOutlined sx={{ fontSize: 32 }} />} title="Financial Services" text="Secure payment processing and financial management tools for all transactions." />
         </Grid>

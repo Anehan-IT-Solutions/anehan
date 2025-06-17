@@ -80,38 +80,143 @@ const managers = [findMember('John Angelo Basco'), findMember('Francisco Theodor
 const marketingTeam = [findMember('Kyla Mae Sorongan'), findMember('Kimberly Lapuz')];
 const techTeam = [findMember('Jobert Mampusti'), findMember('JM Cabrera'), findMember('Ivhan Salazar')];
 
-const teams: Record<string, (Member | undefined)[]> = {
-  'CMO': marketingTeam,
-  'COO': techTeam,
-  'CFO': []
-};
 
-const MemberCard = ({ member, isManager = false }: { member: Member, isManager?: boolean }) => (
-  <Paper
-    variant="outlined"
-    sx={{
-      p: 2,
-      display: 'flex',
-      flexDirection: 'column',
-      alignItems: 'center',
-      textAlign: 'center',
-      height: '100%',
-      backgroundColor: '#ffffff',
-      borderColor: (theme) => theme.palette.grey[300],
-      borderTop: (theme) => `4px solid ${isManager ? theme.palette.primary.main : theme.palette.primary.light}`,
-      transition: 'box-shadow 0.3s, transform 0.3s',
-      '&:hover': {
-        transform: 'translateY(-4px)',
-        boxShadow: (theme) => `0 8px 20px ${alpha(theme.palette.primary.dark, 0.08)}`,
-      }
-    }}
-  >
-    <Avatar src={member.image} alt={member.name} sx={{ width: 80, height: 80, mb: 2, border: theme => `3px solid ${theme.palette.primary.light}` }} />
-    <Typography variant="h6" sx={{ fontWeight: 'bold', color: 'primary.dark' }}>{member.name}</Typography>
-    <Typography variant="body1" color="primary.main" sx={{ mb: 1, fontWeight: 'medium' }}>{member.role}</Typography>
-    <Typography variant="caption" color="text.secondary">{member.description}</Typography>
-  </Paper>
-);
+const MemberCard = ({ member, isManager = false, isCEO = false }: { member: Member, isManager?: boolean, isCEO?: boolean }) => {
+  const cardColor = isCEO ? '#f3a203' : isManager ? '#f3a203' : '#00c261';
+  const bgGradient = isCEO 
+    ? 'linear-gradient(135deg, #f3a203 0%, #00c261 100%)'
+    : isManager 
+    ? 'linear-gradient(135deg, #f3a203 0%, #ff9e00 100%)'
+    : 'linear-gradient(135deg, #00c261 0%, #00a555 100%)';
+  
+  return (
+    <Paper
+      elevation={0}
+      sx={{
+        p: 3,
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        textAlign: 'center',
+        height: '100%',
+        background: 'white',
+        borderRadius: 4,
+        position: 'relative',
+        overflow: 'hidden',
+        transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+        boxShadow: '0 4px 20px rgba(0,0,0,0.08)',
+                  '&:hover': {
+            transform: 'translateY(-8px)',
+            boxShadow: isCEO 
+              ? '0 20px 40px rgba(243, 162, 3, 0.25), 0 20px 40px rgba(0, 194, 97, 0.15)' 
+              : isManager 
+              ? '0 12px 32px rgba(243, 162, 3, 0.2)' 
+              : '0 12px 32px rgba(0, 194, 97, 0.2)',
+          },
+        '&::before': {
+          content: '""',
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          right: 0,
+          height: isCEO ? '6px' : '4px',
+          background: bgGradient,
+        }
+      }}
+    >
+      <Box
+        sx={{
+          position: 'relative',
+          mb: 2,
+          '&::after': {
+            content: '""',
+            position: 'absolute',
+            top: -8,
+            left: -8,
+            right: -8,
+            bottom: -8,
+            borderRadius: '50%',
+            background: `${cardColor}15`,
+            zIndex: 0,
+          }
+        }}
+      >
+        <Box
+          sx={{
+            position: 'relative',
+            display: 'inline-block',
+            '&::before': isCEO ? {
+              content: '""',
+              position: 'absolute',
+              top: -6,
+              left: -6,
+              right: -6,
+              bottom: -6,
+              borderRadius: '50%',
+              background: 'linear-gradient(135deg, #f3a203 0%, #00c261 100%)',
+              zIndex: 0,
+            } : {},
+          }}
+        >
+          <Avatar 
+            src={member.image} 
+            alt={member.name} 
+            sx={{ 
+              width: isCEO ? 100 : 80, 
+              height: isCEO ? 100 : 80, 
+              border: isCEO ? `4px solid white` : `4px solid ${cardColor}`,
+              position: 'relative',
+              zIndex: 1,
+              boxShadow: isCEO 
+                ? '0 8px 24px rgba(243, 162, 3, 0.3), 0 8px 24px rgba(0, 194, 97, 0.2)' 
+                : `0 8px 24px ${cardColor}40`,
+            }} 
+          />
+        </Box>
+      </Box>
+      <Typography 
+        variant={isCEO ? "h5" : "h6"} 
+        sx={{ 
+          fontWeight: 'bold', 
+          color: isCEO ? 'transparent' : cardColor,
+          background: isCEO ? 'linear-gradient(135deg, #f3a203, #00c261)' : 'transparent',
+          backgroundClip: isCEO ? 'text' : 'initial',
+          WebkitBackgroundClip: isCEO ? 'text' : 'initial',
+          mb: 0.5,
+          fontFamily: 'Agrandir, sans-serif'
+        }}
+      >
+        {member.name}
+      </Typography>
+      <Typography 
+        variant="body2" 
+        sx={{ 
+          color: isCEO ? 'transparent' : cardColor,
+          background: isCEO ? 'linear-gradient(135deg, #f3a203, #00c261)' : 'transparent',
+          backgroundClip: isCEO ? 'text' : 'initial',
+          WebkitBackgroundClip: isCEO ? 'text' : 'initial',
+          mb: 2, 
+          fontWeight: 600,
+          fontSize: isCEO ? '1rem' : '0.875rem',
+          textTransform: 'uppercase',
+          letterSpacing: '0.5px'
+        }}
+      >
+        {member.role}
+      </Typography>
+      <Typography 
+        variant="body2" 
+        sx={{ 
+          color: 'text.secondary',
+          lineHeight: 1.6,
+          fontSize: '0.875rem'
+        }}
+      >
+        {member.description}
+      </Typography>
+    </Paper>
+  );
+};
 
 const Team: React.FC = () => {
   if (!ceo) return null;
@@ -149,7 +254,7 @@ const Team: React.FC = () => {
     >
       <Container maxWidth="xl" sx={{ position: 'relative', zIndex: 1 }}>
         <Box sx={{ textAlign: 'center', mb: 8 }}>
-          <Typography variant="h2" component="h2" sx={{ color: 'primary.dark', mb: 2, fontFamily: 'Agrandir', fontWeight: 800 }}>
+          <Typography variant="h2" component="h2" sx={{ color: '#f3a203', mb: 2, fontFamily: 'Agrandir', fontWeight: 800 }}>
             Our Team
           </Typography>
           <Typography variant="h6" sx={{ color: 'text.secondary', maxWidth: 'md', mx: 'auto' }}>
@@ -157,54 +262,130 @@ const Team: React.FC = () => {
           </Typography>
         </Box>
 
-        <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-          {/* CEO */}
-          <Box sx={{ mb: 2, width: { xs: '80%', sm: '50%', md: '35%', lg: '25%' } }}>
-            <MemberCard member={ceo} isManager />
+                {/* CEO Section */}
+        <Box sx={{ mb: 8, display: 'flex', justifyContent: 'center' }}>
+          <Box sx={{ width: { xs: '100%', sm: '80%', md: '60%', lg: '40%' } }}>
+            <MemberCard member={ceo} isCEO />
           </Box>
-          
-          {/* Connector to Managers */}
-          <Box sx={{ width: '2px', height: '40px', bgcolor: 'grey.300' }} />
-
-          {/* Managers Row */}
-          <Box sx={{ width: '100%', position: 'relative' }}>
-             <Box sx={{
+        </Box>
+        
+        {/* Leadership Team */}
+        <Box sx={{ mb: 8 }}>
+          <Typography 
+            variant="h4" 
+            sx={{ 
+              textAlign: 'center', 
+              mb: 4, 
+              color: '#f3a203', 
+              fontFamily: 'Agrandir, sans-serif',
+              fontWeight: 700,
+              position: 'relative',
+              '&::after': {
+                content: '""',
                 position: 'absolute',
-                top: 0,
-                left: { xs: 0, md: '16.66%' },
-                right: { xs: 0, md: '16.66%' },
-                height: '2px',
-                bgcolor: 'grey.300',
-                display: { xs: 'none', md: 'block' }
-            }}/>
-            <Grid container spacing={4} justifyContent="center">
-              {managers.map(manager => (
-                manager && (
-                  <Grid size={{ xs: 12, md: 4 }} key={manager.name}>
-                    <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                      {/* Connector from horizontal line */}
-                      <Box sx={{ width: '2px', height: '20px', bgcolor: 'grey.300' }} />
-                      <Box sx={{ mb: 2, width: '85%' }}>
-                        <MemberCard member={manager} isManager />
-                      </Box>
-                      
-                      {/* Team under manager */}
-                      {(teams[manager.role] || []).length > 0 && (
-                        <>
-                          <Box sx={{ width: '2px', height: '20px', bgcolor: 'grey.300' }} />
-                          <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2, width: '85%' }}>
-                            {(teams[manager.role] || []).map(member => (
-                              member && <MemberCard key={member.name} member={member} />
-                            ))}
-                          </Box>
-                        </>
-                      )}
-                    </Box>
-                  </Grid>
-                )
-              ))}
-            </Grid>
-          </Box>
+                bottom: -8,
+                left: '50%',
+                transform: 'translateX(-50%)',
+                width: 80,
+                height: 4,
+                background: 'linear-gradient(135deg, #f3a203 0%, #ff9e00 100%)',
+                borderRadius: 2,
+              }
+            }}
+          >
+            Leadership Team
+          </Typography>
+          <Grid container spacing={4} justifyContent="center">
+            {managers.map(manager => (
+              manager && (
+                <Grid size={{ xs: 12, sm: 6, lg: 4 }} key={manager.name}>
+                  <MemberCard member={manager} isManager />
+                </Grid>
+              )
+            ))}
+          </Grid>
+        </Box>
+
+        {/* Team Members by Department */}
+        <Box>
+          <Typography 
+            variant="h4" 
+            sx={{ 
+              textAlign: 'center', 
+              mb: 6, 
+              color: '#00c261', 
+              fontFamily: 'Agrandir, sans-serif',
+              fontWeight: 700,
+              position: 'relative',
+              '&::after': {
+                content: '""',
+                position: 'absolute',
+                bottom: -8,
+                left: '50%',
+                transform: 'translateX(-50%)',
+                width: 80,
+                height: 4,
+                background: 'linear-gradient(135deg, #00c261 0%, #00a555 100%)',
+                borderRadius: 2,
+              }
+            }}
+          >
+            Our Team
+          </Typography>
+          
+          {/* Marketing & Sales Team */}
+          {marketingTeam.some(member => member) && (
+            <Box sx={{ mb: 6 }}>
+              <Typography 
+                variant="h5" 
+                sx={{ 
+                  textAlign: 'center', 
+                  mb: 3, 
+                  color: '#00c261',
+                  fontFamily: 'Agrandir, sans-serif',
+                  fontWeight: 600
+                }}
+              >
+                Marketing & Sales
+              </Typography>
+              <Grid container spacing={3} justifyContent="center">
+                {marketingTeam.map(member => (
+                  member && (
+                    <Grid size={{ xs: 12, sm: 6, md: 4 }} key={member.name}>
+                      <MemberCard member={member} />
+                    </Grid>
+                  )
+                ))}
+              </Grid>
+            </Box>
+          )}
+
+          {/* Technology Team */}
+          {techTeam.some(member => member) && (
+            <Box>
+              <Typography 
+                variant="h5" 
+                sx={{ 
+                  textAlign: 'center', 
+                  mb: 3, 
+                  color: '#00c261',
+                  fontFamily: 'Agrandir, sans-serif',
+                  fontWeight: 600
+                }}
+              >
+                Technology
+              </Typography>
+              <Grid container spacing={3} justifyContent="center">
+                {techTeam.map(member => (
+                  member && (
+                    <Grid size={{ xs: 12, sm: 6, md: 4 }} key={member.name}>
+                      <MemberCard member={member} />
+                    </Grid>
+                  )
+                ))}
+              </Grid>
+            </Box>
+          )}
         </Box>
       </Container>
     </Box>

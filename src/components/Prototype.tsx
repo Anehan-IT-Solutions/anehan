@@ -131,7 +131,7 @@ const Prototype: React.FC = () => {
           sx={{
             fontWeight: 800,
             mb: 8,
-            color: 'primary.dark',
+            color: '#f3a203',
             fontFamily: 'Agrandir, sans-serif',
             textAlign: 'center',
             fontSize: { xs: '2.5rem', md: '3rem' },

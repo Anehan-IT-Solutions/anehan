@@ -24,7 +24,7 @@ const Home: React.FC = () => {
         textAlign: 'center',
         pt: 8,
         pb: 8,
-        background: 'linear-gradient(to bottom, rgba(161, 200, 151, 0.9), rgba(76, 106, 83, 0.9)), url(\'/anehan-bg.png\')',
+        background: 'linear-gradient(to bottom, rgba(0, 194, 97, 0.6), rgba(1, 107, 47, 0.6)), url(\'/anehan-bg.png\')',
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         '&::after': {
@@ -51,7 +51,7 @@ const Home: React.FC = () => {
             mb: 2,
             fontFamily: 'Agrandir, sans-serif',
             letterSpacing: '0.05em',
-            textTransform: 'uppercase',
+            // textTransform: 'uppercase',
             color: 'white',
             textShadow: '2px 2px 4px rgba(0,0,0,0.3)',
             animation: 'fadeInDown 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94)',

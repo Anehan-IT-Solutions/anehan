@@ -85,70 +85,135 @@ const ContactInfo: React.FC = () => {
           content: '""',
           position: 'absolute',
           borderRadius: '50%',
-          background: (theme) => `radial-gradient(circle, ${theme.palette.primary.light}10 0%, transparent 60%)`,
+          background: 'radial-gradient(circle, rgba(243, 162, 3, 0.1) 0%, transparent 60%)',
           zIndex: 0,
           pointerEvents: 'none',
         },
         '&::before': {
-          width: 300,
-          height: 300,
-          top: -50,
+          width: 400,
+          height: 400,
+          top: -100,
           left: -100,
         },
         '&::after': {
-          width: 400,
-          height: 400,
-          bottom: -100,
-          right: -100,
+          width: 300,
+          height: 300,
+          bottom: -50,
+          right: -50,
+          background: 'radial-gradient(circle, rgba(0, 194, 97, 0.1) 0%, transparent 60%)',
         }
       }}
     >
-      <Container maxWidth="md">
+      <Container maxWidth="md" sx={{ position: 'relative', zIndex: 1 }}>
         <Paper 
-          variant="outlined"
+          elevation={0}
           sx={{ 
             p: { xs: 3, md: 5 },
-            borderColor: (theme) => theme.palette.grey[300],
             borderRadius: 4,
             backgroundColor: '#ffffff',
+            boxShadow: '0 4px 20px rgba(0,0,0,0.08)',
+            position: 'relative',
+            overflow: 'hidden',
+            '&::before': {
+              content: '""',
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              right: 0,
+              height: '6px',
+              background: 'linear-gradient(135deg, #f3a203 0%, #00c261 100%)',
+            }
           }}>
           <Typography 
-            variant="h3" 
+            variant="h2" 
             fontWeight={800} 
             mb={4} 
-            color="#4caf50" 
+            color="#f3a203" 
             textAlign="center"
             fontFamily="Agrandir, sans-serif"
             sx={{
-              fontSize: { xs: '2.5rem', md: '3rem' }
+              fontSize: { xs: '2.5rem', md: '3rem' },
+              position: 'relative',
+              '&::after': {
+                content: '""',
+                position: 'absolute',
+                bottom: -8,
+                left: '50%',
+                transform: 'translateX(-50%)',
+                width: 80,
+                height: 4,
+                background: 'linear-gradient(135deg, #f3a203 0%, #00c261 100%)',
+                borderRadius: 2,
+              }
             }}
           >
             Contact us
           </Typography>
-          <Typography textAlign="center" sx={{ color: 'text.secondary', mb: 4, mt: -3 }}>
+          <Typography textAlign="center" sx={{ color: '#00c261', mb: 4, mt: 0, fontFamily: 'Agrandir, sans-serif' }}>
             Have a question or want to work together? Fill out the form below or contact us directly.
           </Typography>
           
           <Grid container spacing={4} sx={{ mb: 4, textAlign: 'center' }}>
             <Grid size={{ xs: 12, sm: 6 }}>
-              <Typography variant="h6" component="div" sx={{ fontWeight: 'bold', color: 'text.primary' }}>Email Us</Typography>
-              <Typography
-                component="a"
-                href="mailto:hello@anehan.com"
-                sx={{
-                  color: 'primary.main',
-                  textDecoration: 'none',
-                  '&:hover': {
-                    textDecoration: 'underline',
-                  },
-                }}
-              >
-                mraldrinpallarcoabenoja@gmail.com
-              </Typography>
+              <Box sx={{ 
+                p: 3, 
+                background: 'linear-gradient(135deg, #fef3e2 0%, #f0fdf4 100%)', 
+                borderRadius: 3,
+                border: '2px solid transparent',
+                position: 'relative',
+                '&::before': {
+                  content: '""',
+                  position: 'absolute',
+                  inset: 0,
+                  padding: '2px',
+                  background: 'linear-gradient(135deg, #f3a203 0%, #00c261 100%)',
+                  borderRadius: 'inherit',
+                  mask: 'linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)',
+                  maskComposite: 'subtract',
+                  WebkitMask: 'linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)',
+                  WebkitMaskComposite: 'xor',
+                }
+              }}>
+                <Typography variant="h6" component="div" sx={{ fontWeight: 'bold', color: '#f3a203', mb: 1, fontFamily: 'Agrandir, sans-serif' }}>📧 Email Us</Typography>
+                <Typography
+                  component="a"
+                  href="mailto:hello@anehan.com"
+                  sx={{
+                    color: '#00c261',
+                    textDecoration: 'none',
+                    fontWeight: 600,
+                    '&:hover': {
+                      textDecoration: 'underline',
+                    },
+                  }}
+                >
+                  mraldrinpallarcoabenoja@gmail.com
+                </Typography>
+              </Box>
             </Grid>
             <Grid size={{ xs: 12, sm: 6 }}>
-              <Typography variant="h6" component="div" sx={{ fontWeight: 'bold', color: 'text.primary' }}>Our Location</Typography>
-              <Typography sx={{ color: 'text.secondary' }}>Santa Mesa, Manila, Philippines</Typography>
+              <Box sx={{ 
+                p: 3, 
+                background: 'linear-gradient(135deg, #fef3e2 0%, #f0fdf4 100%)', 
+                borderRadius: 3,
+                border: '2px solid transparent',
+                position: 'relative',
+                '&::before': {
+                  content: '""',
+                  position: 'absolute',
+                  inset: 0,
+                  padding: '2px',
+                  background: 'linear-gradient(135deg, #f3a203 0%, #00c261 100%)',
+                  borderRadius: 'inherit',
+                  mask: 'linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)',
+                  maskComposite: 'subtract',
+                  WebkitMask: 'linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)',
+                  WebkitMaskComposite: 'xor',
+                }
+              }}>
+                <Typography variant="h6" component="div" sx={{ fontWeight: 'bold', color: '#f3a203', mb: 1, fontFamily: 'Agrandir, sans-serif' }}>📍 Our Location</Typography>
+                <Typography sx={{ color: '#00c261', fontWeight: 600 }}>Santa Mesa, Manila, Philippines</Typography>
+              </Box>
             </Grid>
           </Grid>
 
@@ -205,13 +270,21 @@ const ContactInfo: React.FC = () => {
                 fullWidth
                 size="large"
                 variant="contained"
-                color="primary"
                 sx={{ 
                   py: 1.5,
                   fontSize: '1.1rem',
-                  boxShadow: '0 4px 12px rgba(21, 128, 61, 0.2)',
+                  background: 'linear-gradient(135deg, #f3a203 0%, #00c261 100%)',
+                  borderRadius: 3,
+                  fontWeight: 'bold',
+                  fontFamily: 'Agrandir, sans-serif',
+                  boxShadow: '0 4px 12px rgba(243, 162, 3, 0.3), 0 4px 12px rgba(0, 194, 97, 0.2)',
+                  transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
                   '&:hover': {
-                    boxShadow: '0 6px 18px rgba(21, 128, 61, 0.25)',
+                    transform: 'translateY(-2px)',
+                    boxShadow: '0 8px 24px rgba(243, 162, 3, 0.4), 0 8px 24px rgba(0, 194, 97, 0.3)',
+                  },
+                  '&:disabled': {
+                    background: 'linear-gradient(135deg, rgba(243, 162, 3, 0.5) 0%, rgba(0, 194, 97, 0.5) 100%)',
                   }
                 }}
                 disabled={status === 'loading'}

@@ -35,6 +35,8 @@ const Navbar: React.FC = () => {
     { label: 'Home', to: 'home' },
     { label: 'About', to: 'contents' },
     { label: 'Team', to: 'team' },
+    { label: 'Timeline', to: 'our-journey' },
+    { label: 'Showcase', to: 'showcase' },
     { label: 'Contact', to: 'contact-info' },
   ];
 
@@ -42,10 +44,10 @@ const Navbar: React.FC = () => {
     <AppBar 
       position="fixed" 
       sx={{ 
-        backgroundColor: '#1D2B1F',
+        backgroundColor: 'white',
         backdropFilter: 'blur(10px)',
-        boxShadow: 'none',
-        borderBottom: '1px solid rgba(255, 255, 255, 0.1)',
+        boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)',
+        borderBottom: '1px solid rgba(0, 194, 97, 0.1)',
       }}
     >
       <Container maxWidth="lg">
@@ -59,7 +61,7 @@ const Navbar: React.FC = () => {
               sx={{
                 ml: 2,
                 fontWeight: 'bold',
-                color: 'white',
+                color: '#00c261',
                 fontFamily: 'Agrandir',
               }}
             >
@@ -80,10 +82,10 @@ const Navbar: React.FC = () => {
                   offset={-70}
                   duration={500}
                   sx={{
-                    color: 'white',
+                    color: '#00c261',
                     cursor: 'pointer',
                     '&:hover': {
-                      color: 'grey.300',
+                      color: '#00a555',
                     },
                   }}
                 >
@@ -100,7 +102,7 @@ const Navbar: React.FC = () => {
                 size="large"
                 edge="end"
                 color="inherit"
-                sx={{ color: 'white' }}
+                sx={{ color: '#00c261' }}
                 aria-label="menu"
                 onClick={handleMenuClick}
               >
@@ -113,9 +115,9 @@ const Navbar: React.FC = () => {
                 PaperProps={{
                   sx: {
                     mt: 1.5,
-                    backgroundColor: 'rgba(29, 43, 31, 0.95)',
+                    backgroundColor: 'rgba(255, 255, 255, 0.95)',
                     backdropFilter: 'blur(8px)',
-                    color: 'white',
+                    color: '#00c261',
                   },
                 }}
               >
@@ -132,7 +134,7 @@ const Navbar: React.FC = () => {
                     sx={{
                       cursor: 'pointer',
                       '&:hover': {
-                        backgroundColor: 'rgba(255, 255, 255, 0.1)',
+                        backgroundColor: 'rgba(0, 194, 97, 0.1)',
                       },
                     }}
                   >

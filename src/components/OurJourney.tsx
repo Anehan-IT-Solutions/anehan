@@ -77,22 +77,32 @@ const TimelineItem: React.FC<{ item: JourneyItem; index: number; isLast: boolean
           position: 'relative',
         }}
       >
-        {/* Content Card */}
+        {        /* Content Card */}
         <Paper
-          variant="outlined"
+          elevation={0}
           sx={{
-            p: 3,
+            p: 4,
             width: isMobile ? '100%' : '45%',
             maxWidth: isMobile ? 'none' : '400px',
             backgroundColor: '#ffffff',
-            borderColor: theme.palette.grey[300],
-            borderTop: '4px solid #f3a203',
-            borderRadius: 2,
-            transition: 'all 0.3s ease',
+            borderRadius: 4,
+            position: 'relative',
+            overflow: 'hidden',
+            boxShadow: '0 4px 20px rgba(0,0,0,0.08)',
+            transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
             ml: isMobile ? 7 : 0,
             '&:hover': {
-              transform: 'translateY(-4px)',
-              boxShadow: '0 8px 20px rgba(243, 162, 3, 0.15)',
+              transform: 'translateY(-8px)',
+              boxShadow: '0 16px 40px rgba(243, 162, 3, 0.2)',
+            },
+            '&::before': {
+              content: '""',
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              right: 0,
+              height: '6px',
+              background: 'linear-gradient(135deg, #f3a203 0%, #00c261 100%)',
             }
           }}
         >
@@ -139,15 +149,22 @@ const TimelineItem: React.FC<{ item: JourneyItem; index: number; isLast: boolean
           top: '50%',
           transform: isMobile ? 'translateY(-50%)' : 'translate(-50%, -50%)',
           zIndex: 2,
-          width: 48,
-          height: 48,
+          width: 56,
+          height: 56,
           borderRadius: '50%',
-          backgroundColor: '#f3a203',
+          background: 'linear-gradient(135deg, #f3a203 0%, #00c261 100%)',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
           color: 'white',
-          boxShadow: '0 4px 12px rgba(243, 162, 3, 0.4)',
+          boxShadow: '0 8px 24px rgba(243, 162, 3, 0.3), 0 4px 12px rgba(0, 194, 97, 0.2)',
+          '&::before': {
+            content: '""',
+            position: 'absolute',
+            inset: '4px',
+            borderRadius: '50%',
+            background: 'rgba(255, 255, 255, 0.1)',
+          }
         }}
       >
         {item.icon}
@@ -172,21 +189,22 @@ const OurJourney: React.FC = () => {
           content: '""',
           position: 'absolute',
           borderRadius: '50%',
-          background: `radial-gradient(circle, rgba(161, 200, 151, 0.5) 0%, rgba(161, 200, 151, 0.2) 60%)`,
+          background: 'radial-gradient(circle, rgba(243, 162, 3, 0.1) 0%, transparent 60%)',
           zIndex: 0,
           pointerEvents: 'none',
         },
         '&::before': {
-          width: 300,
-          height: 300,
-          top: -50,
+          width: 400,
+          height: 400,
+          top: -100,
           left: -100,
         },
         '&::after': {
-          width: 400,
-          height: 400,
-          bottom: -100,
-          right: -100,
+          width: 300,
+          height: 300,
+          bottom: -50,
+          right: -50,
+          background: 'radial-gradient(circle, rgba(0, 194, 97, 0.1) 0%, transparent 60%)',
         }
       }}
     >
@@ -199,7 +217,20 @@ const OurJourney: React.FC = () => {
               color: '#f3a203',
               mb: 2,
               fontFamily: 'Agrandir',
-              fontWeight: 800
+              fontWeight: 800,
+              fontSize: { xs: '2.5rem', md: '3rem' },
+              position: 'relative',
+              '&::after': {
+                content: '""',
+                position: 'absolute',
+                bottom: -8,
+                left: '50%',
+                transform: 'translateX(-50%)',
+                width: 80,
+                height: 4,
+                background: 'linear-gradient(135deg, #f3a203 0%, #00c261 100%)',
+                borderRadius: 2,
+              }
             }}
           >
             Our Journey
@@ -207,10 +238,11 @@ const OurJourney: React.FC = () => {
           <Typography
             variant="h6"
             sx={{
-              color: 'text.secondary',
+              color: '#00c261',
               maxWidth: 'md',
               mx: 'auto',
-              lineHeight: 1.6
+              lineHeight: 1.6,
+              fontFamily: 'Agrandir, sans-serif'
             }}
           >
             From a capstone project to an innovative agricultural technology solution, our growth story continues.
@@ -218,16 +250,17 @@ const OurJourney: React.FC = () => {
         </Box>
 
         <Box sx={{ position: 'relative' }}>
-          {/* Central Timeline Line */}
+          {          /* Central Timeline Line */}
           <Box
             sx={{
               position: 'absolute',
               left: { xs: '24px', md: '50%' },
               top: 0,
               bottom: 0,
-              width: '2px',
-              bgcolor: 'rgba(243, 162, 3, 0.3)',
+              width: '4px',
+              background: 'linear-gradient(180deg, #f3a203 0%, #00c261 100%)',
               transform: { xs: 'none', md: 'translateX(-50%)' },
+              borderRadius: '2px',
               zIndex: 0,
             }}
           />

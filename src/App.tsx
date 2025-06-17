@@ -2,6 +2,7 @@ import { ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import Navbar from './components/Navbar'
 import Home from './components/Home'
+import Showcase from './components/Showcase'
 // import TechStack from './components/TechStack'
 import Team from './components/Team'
 import OurJourney from './components/OurJourney'
@@ -24,6 +25,7 @@ function App() {
       
       <Prototype />
       <OurJourney />
+      <Showcase />
       <Team />
       
       <ContactInfo />
