@@ -27,20 +27,53 @@ interface Event {
 
 const events: Event[] = [
   {
+    id: 'e',
+    title: 'Agri-Industry Reverse Pitching',
+    description: 'Team Anehan participated in the Agri-Industry Reverse Pitching organized by the Entrepinoy Volunteers Foundation, Inc. (EVFI), co-presented by SCALE NCR, and powered by DOST NCR. Held at the FEU Tech Innovation Center, this event served as a collaborative space for student innovators across different universities to present agricultural technology ideas. The event aimed to foster innovative problem-solving in the agri-sector, bridging the gap between research, technology, and real-world application.',
+    date: 'February 10, 2025',
+    location: 'FEU Tech Innovation Center',
+    images: ['/showcase/e1.jpg', '/showcase/e2.jpg'],
+  },
+  {
+    id: 'j',
+    title: 'Startup Leaders Roundtable & Networking Session',
+    description: 'Team Anehan took part in a high-impact networking session with accomplished entrepreneurs and startup leaders. Among those present were Ms. Gabrielle Tan Lay Khim (Assistant Director, SMU), Mr. Patrick Roland De Guzman (Founder, Saltric), Ms. Alyssa Casandra Wee (Co-Founder & COO, Dormy PH), Ms. Uma Louise Roa (Founder, Pic-A-Talk), and Ms. Raffy Mae Alidon and Mr. Oliver Santos (Country Directors, Wavesparks PH). The session facilitated rich discussions on startup growth, operational scalability, investor readiness, and leadership development.',
+    date: 'February 17, 2025',
+    location: 'Quezon City, Philippines',
+    images: ['/showcase/j1.jpg', '/showcase/h1.jpg', '/showcase/h2.jpg', '/showcase/h3.jpg'],
+  },
+  {
+    id: 'l',
+    title: 'PUP Cabiao Campus',
+    description: 'Team Anehan presented its startup concept to Mr. Fernan Estingor of PUP Cabiao, securing formal endorsement and institutional support. This endorsement helped establish Team Anehan\'s credibility within academic circles and enabled key connections with the local government of Cabiao. Additionally, the team introduced its marketing strategist from PUP Cabiao, ensuring alignment and transparency.',
+    date: 'February 24, 2025',
+    location: 'Cabiao, Nueva Ecija',
+    images: ['/showcase/l1.jpg'],
+  },
+  {
     id: 'a',
     title: 'Stakeholder Engagement – LGU Gapan, Nueva Ecija',
     description: 'The team conducted a stakeholder meeting with Mayor Joy Pascual of Gapan City, Nueva Ecija. The mayor pledged her endorsement and introduced Team Anehan to the Municipal Agriculture Office (MAO). The LGU expressed its willingness to support platform testing and to connect the team with key players in the city’s agricultural landscape.',
     date: 'February 24, 2025',
     location: 'Gapan, Nueva Ecija',
     images: ['/showcase/a1.jpg', '/showcase/a2.jpg'],
+    
   },
   {
-    id: 'b',
-    title: 'Provincial Entry – LGU Sta. Ignacia, Tarlac',
-    description: 'This marked Team Anehan’s first formal engagement in Tarlac Province. The team met with Mayor Nora Modomo of Sta. Ignacia to present its technology platform. The mayor issued a formal endorsement and directed the team to collaborate with their MAO for localized data and implementation planning.',
-    date: 'February 26, 2025',
-    location: 'Sta Ignacia, Nueva Ecija',
-    images: ['/showcase/b1.jpg', '/showcase/b2.jpg', '/showcase/b3.jpg'],
+    id: 'g',
+    title: 'Project Presentation – LGU Cabiao, Nueva Ecija',
+    description: 'Team Anehan formally introduced its agri-platform to the Local Government Unit (LGU) of Cabiao, Nueva Ecija. The meeting, attended by Mayor Rav Kevin Rivera, focused on identifying how the platform could serve the municipality’s agricultural stakeholders, especially smallholder farmers. The LGU expressed strong interest and offered support in providing logistical and stakeholder data for future implementation.',
+    date: 'February 24, 2025',
+    location: 'Cabiao, Nueva Ecija',
+    images: ['/showcase/g1.jpg', '/showcase/g2.jpg'],
+  },
+  {
+    id: 'k',
+    title: 'Technical Meeting – MAO Gapan',
+    description: 'Team Anehan met with representatives from the Municipal Agriculture Office of Gapan to acquire comprehensive local agricultural data. The MAO shared a directory of cooperatives, milling firms, and farmer groups that could benefit from the platform. They also offered to endorse Team Anehan to these stakeholders and support pilot testing initiatives.',
+    date: 'February 24, 2025',
+    location: 'Gapan, Nueva Ecija',
+    images: ['/showcase/k1.jpg'],
   },
   {
     id: 'c',
@@ -50,14 +83,9 @@ const events: Event[] = [
     location: 'NFA Region 3, Nueva Ecija',
     images: ['/showcase/c1.jpg', '/showcase/c2.jpg', '/showcase/c3.jpg', '/showcase/f1.jpg', '/showcase/f2.jpg'],
   },
-  {
-    id: 'e',
-    title: 'Agri-Industry Reverse Pitching',
-    description: 'Team Anehan participated in the Agri-Industry Reverse Pitching organized by the Entrepinoy Volunteers Foundation, Inc. (EVFI), co-presented by SCALE NCR, and powered by DOST NCR. Held at the FEU Tech Innovation Center, this event served as a collaborative space for student innovators across different universities to present agricultural technology ideas. The event aimed to foster innovative problem-solving in the agri-sector, bridging the gap between research, technology, and real-world application.',
-    date: 'February 10, 2025',
-    location: 'FEU Tech Innovation Center',
-    images: ['/showcase/e1.jpg', '/showcase/e2.jpg'],
-  },
+ 
+
+
   // {
   //   id: 'f',
   //   title: 'Digital Agriculture Forum',
@@ -66,14 +94,7 @@ const events: Event[] = [
   //   location: 'Tarlac, Philippines',
   //   images: [],
   // },
-  {
-    id: 'g',
-    title: 'Project Presentation – LGU Cabiao, Nueva Ecija',
-    description: 'Team Anehan formally introduced its agri-platform to the Local Government Unit (LGU) of Cabiao, Nueva Ecija. The meeting, attended by Mayor Rav Kevin Rivera, focused on identifying how the platform could serve the municipality’s agricultural stakeholders, especially smallholder farmers. The LGU expressed strong interest and offered support in providing logistical and stakeholder data for future implementation.',
-    date: 'February 24, 2025',
-    location: 'Cabiao, Nueva Ecija',
-    images: ['/showcase/g1.jpg', '/showcase/g2.jpg'],
-  },
+
   // {
   //   id: 'h',
   //   title: 'Sustainable Farming Workshop',
@@ -87,39 +108,25 @@ const events: Event[] = [
     title: 'Community Engagement – LGU and MAO Peñaranda, Nueva Ecija',
     description: 'Team Anehan met with Mayor Joey A. Ramos and representatives from the MAO of Peñaranda to present its solution for farmer-market linkages. The LGU expressed alignment with the project’s goals and offered to assist in deployment logistics, farmer data collection, and community awareness for future pilots.',
     date: 'February 25, 2025',
-    location: 'Quezon City, Philippines',
+    location: 'Nueva Ecija, Philippines',
     images: ['/showcase/i1.jpg', '/showcase/i2.jpg'],
   },
   {
-    id: 'j',
-    title: 'Startup Leaders Roundtable & Networking Session',
-    description: 'Team Anehan took part in a high-impact networking session with accomplished entrepreneurs and startup leaders. Among those present were Ms. Gabrielle Tan Lay Khim (Assistant Director, SMU), Mr. Patrick Roland De Guzman (Founder, Saltric), Ms. Alyssa Casandra Wee (Co-Founder & COO, Dormy PH), Ms. Uma Louise Roa (Founder, Pic-A-Talk), and Ms. Raffy Mae Alidon and Mr. Oliver Santos (Country Directors, Wavesparks PH). The session facilitated rich discussions on startup growth, operational scalability, investor readiness, and leadership development.',
-    date: 'February 17, 2025',
-    location: 'Quezon City, Philippines',
-    images: ['/showcase/j1.jpg', '/showcase/h1.jpg', '/showcase/h2.jpg', '/showcase/h3.jpg'],
+    id: 'b',
+    title: 'Provincial Entry – LGU Sta. Ignacia, Tarlac',
+    description: 'This marked Team Anehan’s first formal engagement in Tarlac Province. The team met with Mayor Nora Modomo of Sta. Ignacia to present its technology platform. The mayor issued a formal endorsement and directed the team to collaborate with their MAO for localized data and implementation planning.',
+    date: 'February 26, 2025',
+    location: 'Sta Ignacia, Tarlac',
+    images: ['/showcase/b1.jpg', '/showcase/b2.jpg', '/showcase/b3.jpg'],
   },
-  {
-    id: 'k',
-    title: 'Technical Meeting – MAO Gapan',
-    description: 'Team Anehan met with representatives from the Municipal Agriculture Office of Gapan to acquire comprehensive local agricultural data. The MAO shared a directory of cooperatives, milling firms, and farmer groups that could benefit from the platform. They also offered to endorse Team Anehan to these stakeholders and support pilot testing initiatives.',
-    date: 'February 24, 2025',
-    location: 'Gapan, Nueva Ecija',
-    images: ['/showcase/k1.jpg'],
-  },
-  {
-    id: 'l',
-    title: 'PUP Cabiao Campus',
-    description: 'Team Anehan presented its startup concept to Mr. Fernan Estingor of PUP Cabiao, securing formal endorsement and institutional support. This endorsement helped establish Team Anehan\'s credibility within academic circles and enabled key connections with the local government of Cabiao. Additionally, the team introduced its marketing strategist from PUP Cabiao, ensuring alignment and transparency.',
-    date: 'February 24, 2025',
-    location: 'Cabiao, Nueva Ecija',
-    images: ['/showcase/l1.jpg'],
-  },
+
+ 
   {
     id: 'm',
     title: 'Startup QC Student Competition – Finalist and Bronze Awardee',
     description: 'Team Anehan successfully participated in the Startup QC Student Competition, an initiative of the Quezon City Government through QC LEDIPO, aimed at nurturing innovation and entrepreneurship among student-led startups. Out of a large pool of participants, Team Anehan advanced to the final round and was awarded Bronze. The program, spearheaded by QC LEDIPO Head Jay Gatmaitan, recognizes impactful and scalable solutions addressing real-world problems. The team’s recognition affirms its strong value proposition in the agri-tech sector and reflects its readiness for future growth and implementation.',
     date: 'May 23, 2025',
-    location: 'San Jose del Monte, Philippines',
+    location: 'Quezon City, Philippines',
     images: ['/showcase/m1.jpg', '/showcase/m2.jpg', '/showcase/m3.jpg'],
   },
 ];
