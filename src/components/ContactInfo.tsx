@@ -77,7 +77,7 @@ const ContactInfo: React.FC = () => {
     <Box 
       id="contact-info" 
       sx={{ 
-        py: 12,
+        py: 4,
         backgroundColor: (theme) => theme.palette.grey[100],
         position: 'relative',
         overflow: 'hidden',
@@ -104,7 +104,7 @@ const ContactInfo: React.FC = () => {
         }
       }}
     >
-      <Container maxWidth="md" sx={{ position: 'relative', zIndex: 1 }}>
+      <Container maxWidth="md" sx={{ position: 'relative', zIndex: 1, pb: 6 }}>
         <Paper 
           elevation={0}
           sx={{ 
@@ -323,6 +323,25 @@ const ContactInfo: React.FC = () => {
             )}
           </form>
         </Paper>
+      </Container>
+      <Container maxWidth="md">
+        <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', py: 4, gap: { xs: 3, md: 6 }, flexWrap: 'wrap', borderTop: '1px solid rgba(0,0,0,0.08)' }}>
+          <Box sx={{ textAlign: 'center' }}>
+            <Typography variant="body2" sx={{ mb: 1.5, fontWeight: 'medium', color: 'text.secondary', fontFamily: 'Agrandir, sans-serif' }}>
+              Incubated By:
+            </Typography>
+            <Box sx={{ display: 'flex', gap: 3, alignItems: 'center' }}>
+              <img src="/sponsors/pup.png" alt="PUP" style={{ height: 75, objectFit: 'contain' }} />
+              <img src="/sponsors/tbi.png" alt="TBI" style={{ height: 75, objectFit: 'contain' }} />
+            </Box>
+          </Box>
+          <Box sx={{ textAlign: 'center' }}>
+            <Typography variant="body2" sx={{ mb: 1.5, fontWeight: 'medium', color: 'text.secondary', fontFamily: 'Agrandir, sans-serif' }}>
+              Powered By:
+            </Typography>
+            <img src="/sponsors/dost.png" alt="DOST" style={{ height: 75, objectFit: 'contain' }} />
+          </Box>
+        </Box>
       </Container>
     </Box>
   );
