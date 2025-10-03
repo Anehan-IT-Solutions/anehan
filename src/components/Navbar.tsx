@@ -89,7 +89,7 @@ const Navbar: React.FC = () => {
 									smooth={isHomePage}
 									offset={isHomePage ? -70 : 0}
 									duration={isHomePage ? 500 : 0}
-									onClick={(e) => {
+									onClick={(e: React.MouseEvent<HTMLAnchorElement>) => {
 										if (isPrivacyPage || isTermsPage) {
 											e.preventDefault();
 											// Navigate to homepage first, then scroll to section
